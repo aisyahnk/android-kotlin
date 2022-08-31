@@ -2,6 +2,8 @@ package com.example.helloworld
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.widget.Toast
 import com.example.helloworld.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,11 +21,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hitung() {
-        val berat = binding.beratEditText.text.toString().toFloat()
-        val tinggi = binding.TinggiEditText.text.toString().toFloat() / 100
-        val bmi = berat / (tinggi*tinggi)
+
+        val berat = binding.beratEditText.text.toString()
+        if (TextUtils.isEmpty(berat)) {
+            Toast.makeText(this, "berat tidak boleh kosong", Toast.LENGTH_LONG).show()
+            return
+        }
+        val tinggi = binding.TinggiEditText.text.toString()
+        if (TextUtils.isEmpty(tinggi)) {
+            Toast.makeText(this, "tinggi tidak boleh kosong", Toast.LENGTH_LONG).show()
+            return
+        }
 
         val selectedId = binding.radioGroup.checkedRadioButtonId
+        if (selectedId == -1) {
+            Toast.makeText(this, "jenis kelamin tidak boleh kosong", Toast.LENGTH_LONG).show()
+            return
+        }
+        val tinggiCm = tinggi.toFloat() / 100
+        val bmi = berat.toFloat() / (tinggiCm * tinggiCm)
         val isMale = selectedId == R.id.priaRadioButton
         val kategori = getKategori(bmi, isMale)
 
@@ -39,8 +55,7 @@ class MainActivity : AppCompatActivity() {
                 bmi >= 27.0 -> R.string.gemuk
                 else -> R.string.ideal
             }
-        }
-        else {
+        } else {
             when {
                 bmi < 18.5 -> R.string.kurus
                 bmi >= 25.0 -> R.string.gemuk
