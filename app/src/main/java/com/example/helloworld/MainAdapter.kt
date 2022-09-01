@@ -2,6 +2,7 @@ package com.example.helloworld
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.helloworld.databinding.ActivityMainBinding
 import com.example.helloworld.databinding.ListItemBinding
@@ -14,6 +15,11 @@ class MainAdapter(private val data: List<hewan>) : RecyclerView.Adapter<MainAdap
             imageView.setImageResource(Hewan.gambarResId)
             textView.text = Hewan.nama
             textView2.text = Hewan.namaLatin
+
+            root.setOnClickListener {
+                val message = root.context.getString(R.string.x_diklik, Hewan.nama)
+                Toast.makeText(root.context, message, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
