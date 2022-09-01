@@ -2,7 +2,6 @@ package com.example.helloworld
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.example.helloworld.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -11,10 +10,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMain.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        Log.d("MainActivity", "Jumlah Data: ${getData().size}")
+        binding.recyclerView.adapter = MainAdapter(getData())
+        binding.recyclerView.setHasFixedSize(true)
     }
     private fun getData(): List<hewan> {
         return listOf(
