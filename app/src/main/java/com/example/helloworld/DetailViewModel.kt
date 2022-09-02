@@ -11,6 +11,8 @@ import java.lang.IllegalArgumentException
 
 class DetailViewModel (private val db: DiaryDao): ViewModel() {
 
+
+
     fun insertDiary(diary: Diary) {
         viewModelScope.launch(Dispatchers.IO) {
             db.insert(diary)
