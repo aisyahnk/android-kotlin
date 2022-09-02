@@ -1,10 +1,12 @@
 package com.example.helloworld
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.helloworld.DetailActivity.Companion.KEY_DIARY_ID
 import com.example.helloworld.database.Diary
 import com.example.helloworld.databinding.ListItemBinding
 
@@ -22,13 +24,17 @@ class MainAdapter : ListAdapter<Diary, MainAdapter.ViewHolder>(DIFF_CALLBACK) {
         }
     }
 
-
-
     class ViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(diary: Diary) = with(binding) {
             judulTextView.text = diary.judul
             diaryTextView.text = diary.diary
+
+            root.setOnClickListener{
+                val intent = Intent(root.context, DetailActivity::class.java)
+                intent.putExtra(KEY_DIARY_ID, diary.id)
+                root.context.startActivity(intent)
+            }
         }
     }
 
