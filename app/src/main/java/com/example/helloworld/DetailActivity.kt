@@ -2,8 +2,10 @@ package com.example.helloworld
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.helloworld.database.Diary
 import com.example.helloworld.database.DiaryDb
@@ -40,7 +42,16 @@ class DetailActivity : AppCompatActivity() {
 
     private fun insertDiary() {
         val judul = binding.judulEditText.text.toString()
+        if (TextUtils.isEmpty(judul)) {
+            Toast.makeText(this, getString(R.string.judul_harus_diisi), Toast.LENGTH_LONG).show()
+            return
+        }
+
         val diary = binding.diaryEditText.text.toString()
+        if (TextUtils.isEmpty(diary)) {
+            Toast.makeText(this, getString(R.string.diary_harus_diisi), Toast.LENGTH_LONG).show()
+            return
+        }
         val data = Diary (judul = judul, diary = diary)
         viewModel.insertDiary(data)
         finish()
